@@ -1,0 +1,17 @@
+{
+  "version": "0",
+  "id": "12345678-1234-1234-1234-123456789012",
+  "detail-type": "OrderPlaced",
+  "source": "order.service",
+  "account": "471147325238",
+  "time": "2024-01-01T00:00:00Z",
+  "region": "us-east-1",
+  "detail": {
+    "orderId": "order-12345",
+    "customerId": "cust-12345",
+    "items": [
+      {"sku": "SKU-001", "quantity": 2, "price": 29.99}
+    ],
+    "shippingAddress": {"city": "Toronto", "country": "CA"}
+  }
+}
