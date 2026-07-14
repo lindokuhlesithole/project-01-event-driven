@@ -36,7 +36,20 @@
 
 ## Overview
 
-I built a production-grade serverless event-driven order processing system on AWS. The idea is simple: a client submits an order via HTTP, and a choreography of Lambda functions processes it asynchronously — inventory gets reserved, payment gets calculated, and a notification gets logged. All of this happens without a single server running 24/7.
+Clicking "Buy Now" on Amazon, Takealot, and Uber Eats results in triggering a series of actions that need to be performed flawlessly - stock checking, payment processing, sending out the confirmation. This becomes difficult at scale because the traditional servers can no longer cope with the load, double payment is made if the transaction needs to be repeated, stock is locked on orders that are not finalized, and the entire checkout process fails if the email service goes down.
+I developed a production-ready event-driven order processing architecture in serverless mode that precisely addresses the above challenge.
+The basic principle here is quite straightforward - an order is submitted via the HTTP request by the client, while the Lambda functions do all the processing - stock locking, payment calculation, and notification logging asynchronously.
+
+Why this architecture matters in the real world:
+Table
+Company	What Happens Without This	What This Architecture Solves
+Amazon	One checkout server crashes, thousands of orders fail	Each service scales independently — no single point of failure
+Takealot	Payment processes but inventory was already sold out	Async choreography means inventory and payment happen in parallel, not sequence
+Uber Eats	Customer gets charged twice because the system retried	Idempotency keys in DynamoDB prevent duplicate processing
+Shopify	Email service is down, so the whole order fails	Event-driven decoupling — notification failure doesn't block inventory or payment
+Netflix (billing)	Peak-hour traffic overwhelms the database	DynamoDB on-demand scales from 0 to millions of requests automatically
+
+Scale example: With 10 orders per minute, this setup barely costs anything at all – Lambda scales down to just a couple of instances, and DynamoDB processes all this traffic silently. But with 10,000 orders per minute (that would be Black Friday), the exact same setup scales out right away – Lambda runs thousands of instances in parallel, DynamoDB handles the burst, and EventBridge routes each event without losing a single one.
 
 **What this project demonstrates:**
 - Infrastructure as Code with Terraform (S3 backend, state locking)
