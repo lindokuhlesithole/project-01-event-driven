@@ -40,14 +40,8 @@ Clicking "Buy Now" on Amazon, Takealot, and Uber Eats results in triggering a se
 I developed a production-ready event-driven order processing architecture in serverless mode that precisely addresses the above challenge.
 The basic principle here is quite straightforward - an order is submitted via the HTTP request by the client, while the Lambda functions do all the processing - stock locking, payment calculation, and notification logging asynchronously.
 
-Why this architecture matters in the real world:
-Table
-Company	What Happens Without This	What This Architecture Solves
-Amazon	One checkout server crashes, thousands of orders fail	Each service scales independently — no single point of failure
-Takealot	Payment processes but inventory was already sold out	Async choreography means inventory and payment happen in parallel, not sequence
-Uber Eats	Customer gets charged twice because the system retried	Idempotency keys in DynamoDB prevent duplicate processing
-Shopify	Email service is down, so the whole order fails	Event-driven decoupling — notification failure doesn't block inventory or payment
-Netflix (billing)	Peak-hour traffic overwhelms the database	DynamoDB on-demand scales from 0 to millions of requests automatically
+Relevance of the architecture in practice: 
+Consider a situation where you are purchasing items from Amazon during the busiest day of the year (Black Friday) and the checkout server fails; consequently, all transactions will fail since everything will depend on that particular server. In my architecture, I avoid single point of failure by allowing services to scale independently such that even if one fails, others continue running successfully. On Takealot, one may pay for an item which is already sold out since the payment system and inventory system cannot communicate quickly. The issue will be fixed by implementing event bridge and parallel execution of inventory and payment check processes. When you make payment using Uber Eats app and there is a problem in the network connection, then payment may be tried again which results in double charges. I implemented idempotent property in DynamoDB by assigning a unique key to ensure that the same order cannot be repeated. If you operate a Shopify web store and your email provider stops working, then the traditional system crashes your whole checkout process. My architecture separates services such that even if there is a failure in the notification service, others inventory and payments succeed. Netflix encounters similar issues during busy hours with millions of billing requests at a go. With the on-demand billing in DynamoDB, this issue is solved automatically without any scaling or manual configuration.
 
 Scale example: With 10 orders per minute, this setup barely costs anything at all – Lambda scales down to just a couple of instances, and DynamoDB processes all this traffic silently. But with 10,000 orders per minute (that would be Black Friday), the exact same setup scales out right away – Lambda runs thousands of instances in parallel, DynamoDB handles the burst, and EventBridge routes each event without losing a single one.
 
