@@ -375,9 +375,3 @@ Based in Bremen, Germany. BSc Mathematical Science from the University of the Wi
 - **LinkedIn:** [linkedin.com/in/lindokuhle-sithole-bb701b19a](https://www.linkedin.com/in/lindokuhle-sithole-bb701b19a)
 - **GitHub:** [github.com/lindokuhlesithole](https://github.com/lindokuhlesithole)
 - **Email:** sitholelindokuhle371@gmail.com
-
----
-
-<p align="center">
-  <b>Built by <a href="https://www.linkedin.com/in/lindokuhle-sithole-bb701b19a">Lindokuhle Sithole</a> - Cloud Engineer | Cloud DevOps Engineer | Cloud Security Specialist</b>
-</p>
