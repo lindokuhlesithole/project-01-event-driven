@@ -46,27 +46,8 @@ Scale example: With 10 orders per minute, this setup barely costs anything at al
 
 ## Architecture
 
-```
-Client (HTTP POST /orders)
-    |
-    v
-API Gateway (REST API)
-    |
-    v
-Order Producer Lambda
-    |
-    v
-EventBridge (orders-event-bus)
-    |
-    |---------------------------|---------------------------|
-    |                           |                           |
-    v                           v                           v
-Inventory Lambda      Payment Lambda        Notification Lambda
-    |                           |                           |
-    v                           v                           v
-DynamoDB               DynamoDB               CloudWatch Logs
-(inventory table)      (payments table)       (confirmation logs)
-```
+<img width="1170" height="891" alt="image" src="https://github.com/user-attachments/assets/4d8e246c-2235-4d72-af76-783c31f2f444" />
+
 
 **How the event flow works:**
 
