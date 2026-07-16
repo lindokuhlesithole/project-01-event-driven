@@ -192,32 +192,8 @@ I created separate DynamoDB tables for inventory and payments. Both use on-deman
 
 ## Project Structure
 
-```
-project-01-event-driven/
-├── terraform/
-│   ├── main.tf              # All AWS resources
-│   ├── variables.tf         # Configurable inputs
-│   ├── outputs.tf           # API endpoint, table names
-│   └── terraform.tfvars     # Environment config
-├── src/
-│   ├── producer/
-│   │   ├── handler.py       # Receives HTTP POST, publishes event
-│   │   └── requirements.txt
-│   ├── consumers/
-│   │   ├── inventory_handler.py   # Reserves stock
-│   │   ├── payment_handler.py     # Processes payment
-│   │   └── notification_handler.py # Sends confirmation
-│   └── shared/
-│       ├── models.py        # Data classes
-│       ├── logger.py        # Structured logging
-│       └── idempotency.py   # Deduplication utility
-├── events/
-│   └── order_placed.json    # Sample event for testing
-├── Makefile
-└── README.md
-```
+<img width="797" height="877" alt="image" src="https://github.com/user-attachments/assets/cf47b66e-6900-43b0-ae22-f5a61037e39f" />
 
----
 
 ## Deployment
 
